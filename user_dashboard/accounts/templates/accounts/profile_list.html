@@ -1,0 +1,12 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Profils</h2>
+<a href="{% url 'profile_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded">Nouveau profil</a>
+<ul class="mt-4">
+  {% for profile in profiles %}
+    <li>
+      <a href="{% url 'profile_detail' profile.pk %}" class="underline">{{ profile.full_name }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

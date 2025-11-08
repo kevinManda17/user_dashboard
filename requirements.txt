@@ -1,0 +1,14 @@
+# Core
+Django==5.0.4
+
+# Pour le CSS utilitaire (intégration de Tailwind via django-tailwind)
+django-tailwind==3.8.0
+
+# Pour gérer les fichiers statiques en production
+whitenoise==6.6.0
+
+# Pour une API future (optionnel, tu peux l’ajouter plus tard)
+djangorestframework==3.15.2
+
+# Outils utiles (pour les variables d’environnement, etc.)
+python-decouple==3.8

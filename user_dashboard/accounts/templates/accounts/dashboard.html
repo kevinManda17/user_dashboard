@@ -1,0 +1,10 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-semibold mb-4">Dashboard</h2>
+<p>Total utilisateurs : {{ user_count }}</p>
+<ul>
+  {% for u in recent_users %}
+    <li>{{ u.username }} — inscrit le {{ u.date_joined|date:"d/m/Y" }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-semibold mb-4">{{ group.name }}</h2>
+<p>{{ group.description }}</p>
+<p>Créé par : {{ group.created_by.username }}</p>
+
+<h3 class="mt-4 font-semibold">Membres</h3>
+<ul>
+  {% for member in group.members.all %}
+    <li>{{ member.full_name }} — {{ member.get_role_display }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
