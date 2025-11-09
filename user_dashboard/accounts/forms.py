@@ -12,7 +12,12 @@ class RegisterForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['full_name', 'bio', 'avatar']
+        fields = ['full_name', 'bio', 'avatar', 'role', 'group']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group'].required = False
+        self.fields['role'].required = False
 
 class GroupForm(forms.ModelForm):
     class Meta:

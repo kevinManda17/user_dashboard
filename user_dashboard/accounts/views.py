@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from .models import Profile, Group
-from .forms import RegisterForm, ProfileForm,  GroupForm
+from .forms import RegisterForm, ProfileForm, GroupForm
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -43,17 +43,29 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
     template_name = 'accounts/profile_form.html'
     success_url = reverse_lazy('profile_list')
 
+    def form_valid(self, form):
+        # Associer automatiquement l'utilisateur connecté au profil
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = ProfileForm
     template_name = 'accounts/profile_form.html'
     success_url = reverse_lazy('profile_list')
 
+    def get_queryset(self):
+        # Ne permettre que la modification de son propre profil
+        return Profile.objects.filter(user=self.request.user)
+
 class ProfileDeleteView(LoginRequiredMixin, DeleteView):
     model = Profile
     template_name = 'accounts/profile_confirm_delete.html'
     success_url = reverse_lazy('profile_list')
 
+    def get_queryset(self):
+        # Ne permettre que la suppression de son propre profil
+        return Profile.objects.filter(user=self.request.user)
 
 class GroupListView(LoginRequiredMixin, ListView):
     model = Group

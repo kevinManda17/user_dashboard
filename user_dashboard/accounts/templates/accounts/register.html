@@ -1,8 +1,69 @@
-{% extends 'accounts/base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Inscription - User Dashboard{% endblock %}
+
 {% block content %}
-<h2 class="text-xl font-semibold mb-4">Inscription</h2>
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button class="bg-green-600 text-white px-4 py-2 rounded">S'inscrire</button>
-</form>
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Créez votre compte
+            </h2>
+        </div>
+        <form class="mt-8 space-y-6" method="post">
+            {% csrf_token %}
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="id_username" class="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
+                    <input type="text" name="username" id="id_username" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    {% if form.username.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" id="id_email" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    {% if form.email.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_password1" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                    <input type="password" name="password1" id="id_password1" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    {% if form.password1.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.password1.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirmation du mot de passe</label>
+                    <input type="password" name="password2" id="id_password2" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    {% if form.password2.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.password2.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" 
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    S'inscrire
+                </button>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">
+                    Déjà un compte ? Connectez-vous
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

@@ -12,10 +12,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*m3pco5w8z4)e9@e6qlwo1a=u!psl7e^-or9v(x$u4uj8@w%bm'
+# SECRET_KEY = 'django-insecure-*m3pco5w8z4)e9@e6qlwo1a=u!psl7e^-or9v(x$u4uj8@w%bm'
+SECRET_KEY = config("SECRET_KEY", default='django-insecure-*m3pco5w8z4)e9@e6qlwo1a=u!psl7e^-or9v(x$u4uj8@w%bm' )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
+
 DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = ["*"]
 
@@ -38,6 +40,10 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
 
+    'crispy_forms',
+    'widget_tweaks',
+    'rest_framework',
+
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -45,6 +51,19 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ["127.0.0.1"]
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
+
+# Permissions globales
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,8 +156,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'accounts' / 'static']
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'accounts/static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
